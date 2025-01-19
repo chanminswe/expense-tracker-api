@@ -1,6 +1,6 @@
-const Expenses = require("../../models/expenses");
+const Incomes = require("../../models/incomes");
 
-const addExpense = async (req, res) => {
+const addIncome = async (req, res) => {
   try {
     const { username, userId } = req.user;
 
@@ -16,7 +16,7 @@ const addExpense = async (req, res) => {
         .json({ message: "Cannot leave the required fields empty" });
     }
 
-    const createTransaction = await Expenses.create({
+    const createTransaction = await Incomes.create({
       userId,
       amount,
       category,
@@ -24,15 +24,15 @@ const addExpense = async (req, res) => {
     });
 
     if (!createTransaction) {
-      return res.status(400).json({ message: "Unable to add Expense" });
+      return res.status(400).json({ message: "Unable to add money" });
     }
     res
       .status(200)
-      .json({ message: "Added expense sucessfully!", createTransaction });
+      .json({ message: "Added money sucessfully!", createTransaction });
   } catch (error) {
     console.error("Error occured at add Expense Controller ", error.message);
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
 
-module.exports = addExpense;
+module.exports = addIncome;
