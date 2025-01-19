@@ -1,6 +1,6 @@
 const { mongoose, Mongoose } = require("mongoose");
 
-const ExpensesSchema = mongoose.create({
+const ExpensesSchema = mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Users",
