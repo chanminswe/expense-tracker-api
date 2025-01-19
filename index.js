@@ -1,7 +1,6 @@
 const express = require("express");
 const app = express();
 const dotenv = require("dotenv").config();
-const router = express.Router();
 const authRoutes = require("./routes/auth");
 const DbConnection = require("./db/DbConnection");
 
@@ -17,6 +16,6 @@ app.get("/", (req, res) => {
 app.use("/api/auth", authRoutes);
 
 app.listen(PORT, () => {
-  DbConnection();
   console.log(`${PORT} has started!`);
+  DbConnection();
 });
