@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Expenses = require("../../models/expenses");
-const Incomes = require('../../models/incomes');
+const Incomes = require("../../models/incomes");
+const Users = require("../../models/users");
 
 const dashboard = async (req, res) => {
   try {
@@ -8,6 +9,12 @@ const dashboard = async (req, res) => {
 
     if (!userId || !username) {
       return res.status(403).json({ message: "Unauthorized Error" });
+    }
+
+    const findUser = await Users.findOne({ _id: id });
+
+    if (!findUser) {
+      return res.status(400).json({ message: "Cannot find user Id" });
     }
 
     const userObjectId = new mongoose.Types.ObjectId(userId);
@@ -62,6 +69,9 @@ const dashboard = async (req, res) => {
     const expenses = expenseBalance.length > 0 ? expenseBalance[0].total : 0;
 
     const balance = incomes - expenses;
+
+    findUser.balance = balance;
+    await findUser.save();
 
     res.status(200).json({
       message: "Dashboard data retrieved successfully",

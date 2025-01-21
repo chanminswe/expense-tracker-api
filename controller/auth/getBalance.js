@@ -1,7 +1,3 @@
-const Expenses = require("../../models/expenses");
-const Incomes = require("../../models/incomes");
-const { ObjectId } = require("mongodb");
-
 const getBalance = async (req, res) => {
   try {
     const { userId, username } = req.user;
@@ -9,6 +5,12 @@ const getBalance = async (req, res) => {
 
     if (!userId || !username) {
       return res.status(403).json({ message: "Token Expired or invalid" });
+    }
+
+    const findUser = await Users.findOne({ _id: id });
+
+    if (!findUser) {
+      return res.status(400).json({ message: "Cannot find user Id" });
     }
 
     const incomeBalance = await Incomes.aggregate([
@@ -26,6 +28,9 @@ const getBalance = async (req, res) => {
 
     const balance = incomes - expenses;
 
+    findUser.balance = balance;
+    await findUser.save(); 
+
     return res.status(200).json({
       username,
       balance,
@@ -33,7 +38,7 @@ const getBalance = async (req, res) => {
       expenseBalance,
     });
   } catch (error) {
-    console.error("Error occured while trying to get Balance ", error.message);
+    console.error("Error occurred while trying to get Balance ", error.message);
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
