@@ -1,11 +1,17 @@
+const { ObjectId } = require("mongodb"); // Import ObjectId
+const Users = require("../../models/users"); // Import Users model
+const Incomes = require("../../models/incomes");
+const Expenses = require("../../models/expenses");
+
 const getBalance = async (req, res) => {
   try {
     const { userId, username } = req.user;
-    const id = new ObjectId(userId);
 
     if (!userId || !username) {
       return res.status(403).json({ message: "Token Expired or invalid" });
     }
+
+    const id = new ObjectId(userId); 
 
     const findUser = await Users.findOne({ _id: id });
 
@@ -29,7 +35,7 @@ const getBalance = async (req, res) => {
     const balance = incomes - expenses;
 
     findUser.balance = balance;
-    await findUser.save(); 
+    await findUser.save();
 
     return res.status(200).json({
       username,

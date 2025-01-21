@@ -12,6 +12,7 @@ const profile = async (req, res) => {
     if (!profile) {
       return res.status(400).json({ message: "Cannot find User!" });
     }
+    
 
     return res
       .status(200)

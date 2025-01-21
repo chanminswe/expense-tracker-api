@@ -11,7 +11,7 @@ const dashboard = async (req, res) => {
       return res.status(403).json({ message: "Unauthorized Error" });
     }
 
-    const findUser = await Users.findOne({ _id: id });
+    const findUser = await Users.findOne({ _id: userId });
 
     if (!findUser) {
       return res.status(400).json({ message: "Cannot find user Id" });
