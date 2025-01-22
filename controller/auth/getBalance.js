@@ -1,5 +1,5 @@
-const { ObjectId } = require("mongodb"); // Import ObjectId
-const Users = require("../../models/users"); // Import Users model
+const { ObjectId } = require("mongodb"); 
+const Users = require("../../models/users"); 
 const Incomes = require("../../models/incomes");
 const Expenses = require("../../models/expenses");
 
