@@ -4,7 +4,7 @@ const { login, register } = require("../controller/auth/authentication");
 const verifyToken = require("../middleware/verify");
 const viewAccount = require("../controller/auth/viewAccount");
 const getBalance = require("../controller/auth/getBalance");
-const dashboard = require("../controller/auth/dashBoard");
+const dashboard = require("../controller/auth/dashboard");
 const profile = require("../controller/auth/profile");
 
 router.post("/register", register);
